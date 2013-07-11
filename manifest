@@ -1,0 +1,18 @@
+#
+# this is your module manifest and used by Titanium
+# during compilation, packaging, distribution, etc.
+#
+version: 0.1
+apiversion: 2
+description: My module
+author: Wienke Giezeman
+license: MIT
+copyright: MIT
+
+
+# these should not be edited
+name: HTML5Video
+moduleid: tv.wappzapp.html5video
+guid: ac6fccc3-e642-4ad1-9232-f277a8a3100c
+platform: android
+minsdk: 3.1.1.GA
