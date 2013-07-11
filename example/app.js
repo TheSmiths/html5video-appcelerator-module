@@ -5,6 +5,9 @@
 
 
 // open a single window
+
+// exmaple
+
 var win = Ti.UI.createWindow({
 	backgroundColor:'white'
 });
