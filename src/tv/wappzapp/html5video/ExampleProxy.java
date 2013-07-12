@@ -23,13 +23,18 @@ import org.itri.html5webview.*;
 import android.app.Activity;
 
 
+
 // This proxy can be created by calling Html5video.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule=Html5videoModule.class)
 public class ExampleProxy extends TiViewProxy
 {
 	// Standard Debugging variables
 	private static final String TAG = "HTML5AndroidVideo";
-
+	
+	VideoWebView videowebview;
+	HTML5WebView html5webview;
+	String url;
+	
 	private class ExampleView extends TiUIView
 	{
 		public ExampleView(TiViewProxy proxy) {
@@ -46,15 +51,8 @@ public class ExampleProxy extends TiViewProxy
 			}
 			
 			html5webview = new HTML5WebView(proxy.getActivity());
-
-//			TiCompositeLayout comp = new TiCompositeLayout(proxy.getActivity(), arrangement);
-//			comp.addView(html5webview.getLayout());
-
+			html5webview.loadUrl(url /*"http://www.google.nl"*/);
 			setNativeView(html5webview.getLayout());
-
-//					TiUIView videowebview = new VideoWebView(this, html5webview);
-//					activity.setContentView(html5webview.getLayout());
-//			setNativeView(new TiCompositeLayout(proxy.getActivity(), arrangement));
 		}
 
 		@Override
@@ -70,9 +68,6 @@ public class ExampleProxy extends TiViewProxy
 		super();
 	}
 
-	VideoWebView videowebview;
-	HTML5WebView html5webview;
-	
 	@Override
 	public TiUIView createView(Activity activity)
 	{
@@ -97,9 +92,8 @@ public class ExampleProxy extends TiViewProxy
 	{
 		super.handleCreationDict(options);
 		if (options.containsKey("url")) {
-			String url = (String) options.get("url");
-			html5webview.loadUrl(url);
-
+			url = (String) options.get("url");
+			
 			//html5webview.loadUrl(url);
 		}
 	}
