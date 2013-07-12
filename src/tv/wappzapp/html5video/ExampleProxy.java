@@ -18,6 +18,7 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
+import org.itri.html5webview.*;
 
 import android.app.Activity;
 
@@ -27,7 +28,7 @@ import android.app.Activity;
 public class ExampleProxy extends TiViewProxy
 {
 	// Standard Debugging variables
-	private static final String TAG = "ExampleProxy";
+	private static final String TAG = "HTML5AndroidVideo";
 
 	private class ExampleView extends TiUIView
 	{
@@ -43,7 +44,17 @@ public class ExampleProxy extends TiViewProxy
 					arrangement = LayoutArrangement.VERTICAL;
 				}
 			}
-			setNativeView(new TiCompositeLayout(proxy.getActivity(), arrangement));
+			
+			html5webview = new HTML5WebView(proxy.getActivity());
+
+//			TiCompositeLayout comp = new TiCompositeLayout(proxy.getActivity(), arrangement);
+//			comp.addView(html5webview.getLayout());
+
+			setNativeView(html5webview.getLayout());
+
+//					TiUIView videowebview = new VideoWebView(this, html5webview);
+//					activity.setContentView(html5webview.getLayout());
+//			setNativeView(new TiCompositeLayout(proxy.getActivity(), arrangement));
 		}
 
 		@Override
@@ -59,13 +70,25 @@ public class ExampleProxy extends TiViewProxy
 		super();
 	}
 
+	VideoWebView videowebview;
+	HTML5WebView html5webview;
+	
 	@Override
 	public TiUIView createView(Activity activity)
 	{
+		
 		TiUIView view = new ExampleView(this);
+
 		view.getLayoutParams().autoFillsHeight = true;
 		view.getLayoutParams().autoFillsWidth = true;
 		return view;
+		
+		//		html5webview = new HTML5WebView(activity);
+ //   	html5webview.loadUrl("http://www.youtube.com/embed/wGMLhaa98GI?autoplay=1");
+
+//		TiUIView videowebview = new VideoWebView(this, html5webview);
+//		activity.setContentView(html5webview.getLayout());
+//		return videowebview;
 	}
 
 	// Handle creation options
@@ -73,29 +96,18 @@ public class ExampleProxy extends TiViewProxy
 	public void handleCreationDict(KrollDict options)
 	{
 		super.handleCreationDict(options);
-		
-		if (options.containsKey("message")) {
-			Log.d(TAG, "example created with message: " + options.get("message"));
+		if (options.containsKey("url")) {
+			String url = (String) options.get("url");
+			html5webview.loadUrl(url);
+
+			//html5webview.loadUrl(url);
 		}
 	}
 	
 	// Methods
-	@Kroll.method
+	/*@Kroll.method
 	public void printMessage(String message)
 	{
 		Log.d(TAG, "printing message: " + message);
-	}
-
-
-	@Kroll.getProperty @Kroll.method
-	public String getMessage()
-	{
-        return "Hello World from my module";
-	}
-
-	@Kroll.setProperty @Kroll.method
-	public void setMessage(String message)
-	{
-	    Log.d(TAG, "Tried setting module message to: " + message);
-	}
+	}*/
 }

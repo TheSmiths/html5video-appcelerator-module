@@ -30,6 +30,10 @@ public class HTML5WebView extends WebView {
 	private FrameLayout							mBrowserFrameLayout;
 	private FrameLayout							mLayout;
 	
+	public FrameLayout getFrame() {
+		return mLayout;
+	}
+	
     static final String LOGTAG = "HTML5WebView";
 	    
 	private void init(Context context) {
@@ -38,10 +42,20 @@ public class HTML5WebView extends WebView {
 		
 		mLayout = new FrameLayout(context);
 		
-		mBrowserFrameLayout = (FrameLayout) LayoutInflater.from(a).inflate(R.layout.custom_screen, null);
-		mContentView = (FrameLayout) mBrowserFrameLayout.findViewById(R.id.main_content);
-		mCustomViewContainer = (FrameLayout) mBrowserFrameLayout.findViewById(R.id.fullscreen_custom_content);
+		mBrowserFrameLayout = new FrameLayout(context); // (FrameLayout) LayoutInflater.from(a).inflate(R.layout.custom_screen, null);
+		mContentView = new FrameLayout(context); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.main_content);
+		mCustomViewContainer = new FrameLayout(context); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.fullscreen_custom_content);
 		
+		
+		mLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		mBrowserFrameLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		mContentView.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		mCustomViewContainer.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+		
+
+        mBrowserFrameLayout.addView(mCustomViewContainer);
+        mBrowserFrameLayout.addView(mContentView);
+        
 		mLayout.addView(mBrowserFrameLayout, COVER_SCREEN_PARAMS);
 
 		mWebChromeClient = new MyWebChromeClient();
@@ -154,8 +168,7 @@ public class HTML5WebView extends WebView {
 		public Bitmap getDefaultVideoPoster() {
 			//Log.i(LOGTAG, "here in on getDefaultVideoPoster");	
 			if (mDefaultVideoPoster == null) {
-				mDefaultVideoPoster = BitmapFactory.decodeResource(
-						getResources(), R.drawable.default_video_poster);
+//				mDefaultVideoPoster = BitmapFactory.decodeResource(getResources(), 0); //, R.drawable.default_video_poster
 		    }
 			return mDefaultVideoPoster;
 		}
@@ -166,7 +179,7 @@ public class HTML5WebView extends WebView {
 			
 	        if (mVideoProgressView == null) {
 	            LayoutInflater inflater = LayoutInflater.from(mContext);
-	            mVideoProgressView = inflater.inflate(R.layout.video_loading_progress, null);
+//	            mVideoProgressView = inflater.inflate(null, null); //R.layout.video_loading_progress
 	        }
 	        return mVideoProgressView; 
 		}
