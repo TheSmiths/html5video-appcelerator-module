@@ -31,7 +31,8 @@ if (Ti.Platform.name == "android") {
 		width: 100,
 		height: 100,
 		top: 100,
-		left: 150
+		left: 150,
+		url:'http://www.youtube.com/embed/ETAEcomff7g'
 	});
 
 	proxy.printMessage("Hello world!");
