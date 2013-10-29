@@ -14,6 +14,7 @@ import org.appcelerator.kroll.annotations.Kroll;
 import org.appcelerator.titanium.TiC;
 import org.appcelerator.titanium.util.Log;
 import org.appcelerator.titanium.util.TiConvert;
+import org.appcelerator.titanium.TiContext.OnLifecycleEvent;
 import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
@@ -24,13 +25,14 @@ import android.app.Activity;
 
 // This proxy can be created by calling Html5video.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule=Html5videoModule.class)
-public class WebVideoProxy extends TiViewProxy
+public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
 {
 	// Standard Debugging variables
 	private static final String TAG = "HTML5AndroidVideo";
 	
 	HTML5WebView html5webview;
 	String url;
+	TiUIView view;
 	
 	private class WebVideoView extends TiUIView
 	{
@@ -68,9 +70,7 @@ public class WebVideoProxy extends TiViewProxy
 	@Override
 	public TiUIView createView(Activity activity)
 	{
-		
-		TiUIView view = new WebVideoView(this);
-
+		view = new WebVideoView(this);
 		view.getLayoutParams().autoFillsHeight = true;
 		view.getLayoutParams().autoFillsWidth = true;
 		return view;
@@ -93,10 +93,25 @@ public class WebVideoProxy extends TiViewProxy
 		html5webview.loadUrl(url);
 	}
 	
-	// Methods
-	/*@Kroll.method
-	public void printMessage(String message)
-	{
-		Log.d(TAG, "printing message: " + message);
-	}*/
+	@Override
+	public void onPause(Activity activity) {
+	}
+
+	@Override
+	public void onResume(Activity activity) {
+	}
+
+	@Override
+	public void onStart(Activity activity) {
+	}
+
+	@Override
+	public void onStop(Activity activity) {
+	}
+
+	@Override
+	public void onDestroy(Activity arg0) {
+		view.destroy(); 
+		view = null;
+	}
 }
