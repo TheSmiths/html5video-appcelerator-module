@@ -16,7 +16,8 @@ var button = Ti.UI.createView({
 	height : 100,
 	backgroundColor : 'red'
 });
-win.add(label);
+home.add(button);
+home.open();
 
 button.addEventListener('click', function() {
 	var win = Ti.UI.createWindow({
@@ -25,15 +26,17 @@ button.addEventListener('click', function() {
 	});
 
 	var HTML5Video = require('tv.wappzapp.html5video');
-	if (Ti.Platform.name == "android") {
-		var proxy = HTML5Video.createView({
-			width : 200,
-			height : 100,
-			url : 'http://www.youtube.com/embed/ETAEcomff7g'
-		});
+	var proxy = HTML5Video.createWebVideo({
+		width : Ti.UI.FILL,
+		height : Ti.UI.FILL,
+		url : 'http://www.youtube.com/embed/ETAEcomff7g'
+	});
 
-		win.add(proxy);
-	}
+	win.add(proxy);
+
+	win.addEventListener('close', function() {
+		proxy.url = "http://www.google.nl";
+	});
+
 	win.open();
 });
-
