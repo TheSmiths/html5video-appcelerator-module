@@ -20,7 +20,6 @@ public class Html5videoModule extends KrollModule
 
 	// Standard Debugging variables
 	private static final String TAG = "Html5videoModule";
-
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 	

@@ -92,28 +92,30 @@ public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
 		html5webview.loadUrl(url);
 	}
 	
-	@Override
+
 	public void onPause(Activity activity) {
 	}
 
-	@Override
 	public void onResume(Activity activity) {
 	}
 
-	@Override
 	public void onStart(Activity activity) {
+		//super.onStart(activity);
 	}
 
-	@Override
 	public void onStop(Activity activity) {
+		//super.onStop(activity);
+
+		html5webview.destroy();
+		//html5webview.destroyDrawingCache();
+		html5webview = null;
+		
+		//view.destroyDrawingCache();
+		//view = null;
 	}
 
-	@Override
 	public void onDestroy(Activity arg0) {
-		html5webview.destroy(); 
-		html5webview = null;
-		view = null;
+
 	}
-	
 	
 }

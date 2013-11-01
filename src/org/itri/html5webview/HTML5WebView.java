@@ -39,12 +39,12 @@ public class HTML5WebView extends WebView {
 	private void init(Context context) {
 		mContext = context;		
 		Activity a = (Activity) mContext;
+				
+		mLayout = new FrameLayout(mContext);
 		
-		mLayout = new FrameLayout(context);
-		
-		mBrowserFrameLayout = new FrameLayout(context); // (FrameLayout) LayoutInflater.from(a).inflate(R.layout.custom_screen, null);
-		mContentView = new FrameLayout(context); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.main_content);
-		mCustomViewContainer = new FrameLayout(context); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.fullscreen_custom_content);
+		mBrowserFrameLayout = new FrameLayout(mContext); // (FrameLayout) LayoutInflater.from(a).inflate(R.layout.custom_screen, null);
+		mContentView = new FrameLayout(mContext); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.main_content);
+		mCustomViewContainer = new FrameLayout(mContext); //(FrameLayout) mBrowserFrameLayout.findViewById(R.id.fullscreen_custom_content);
 		
 		
 		mLayout.setLayoutParams(new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
@@ -83,7 +83,14 @@ public class HTML5WebView extends WebView {
 	    
 	    mContentView.addView(this);
 	}
-
+	
+	@Override
+	public void onPause () {
+		Log.i(LOGTAG, "onPause called in the webview");
+		this.loadData("", "text/html", "utf-8");
+		super.onPause();
+	}
+	
 	public HTML5WebView(Context context) {
 		super(context);
 		init(context);
