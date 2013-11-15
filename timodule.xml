@@ -4,9 +4,16 @@
 		Similar to tiapp.xml, but contains module/platform specific
 		configuration in <iphone>, <android>, and <mobileweb> sections
 	-->
+
 	<iphone>
 	</iphone>
 	<android xmlns:android="http://schemas.android.com/apk/res/android">
+		   <tool-api-level>17</tool-api-level>
+        <!-- This tells us what Android API version to compile against -->
+        <manifest>
+            <uses-sdk android:minSdkVersion="14"/>
+            <!-- This tells the Marketplace and the system what versions of Android your app supports -->
+        </manifest>
 	</android>
 	<mobileweb>
 	</mobileweb>

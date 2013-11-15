@@ -84,12 +84,12 @@ public class HTML5WebView extends WebView {
 	    mContentView.addView(this);
 	}
 	
-	@Override
+	/*@Override
 	public void onPause () {
 		Log.i(LOGTAG, "onPause called in the webview");
 		this.loadData("", "text/html", "utf-8");
 		super.onPause();
-	}
+	}*/
 	
 	public HTML5WebView(Context context) {
 		super(context);

@@ -12,7 +12,7 @@ var home = Ti.UI.createWindow({
 });
 
 var button = Ti.UI.createView({
-	width : 100,
+	width : 300,
 	height : 100,
 	backgroundColor : 'red'
 });
@@ -22,14 +22,14 @@ home.open();
 button.addEventListener('click', function() {
 	var win = Ti.UI.createWindow({
 		backgroundColor : 'white',
-		fullscreen : false // Makes it heavyweight
+		fullscreen : true // Makes it heavyweight
 	});
 
 	var HTML5Video = require('tv.wappzapp.html5video');
 	var proxy = HTML5Video.createWebVideo({
-		width : Ti.UI.FILL,
-		height : Ti.UI.FILL,
-		url : 'http://www.youtube.com/embed/ETAEcomff7g'
+		width : 600,
+		height : 600,
+		url : 'http://www.youtube.com/embed/zDl31YBlbE8'
 	});
 
 	win.add(proxy);

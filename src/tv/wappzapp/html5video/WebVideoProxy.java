@@ -25,7 +25,7 @@ import android.app.Activity;
 
 // This proxy can be created by calling Html5video.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule=Html5videoModule.class)
-public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
+public class WebVideoProxy extends TiViewProxy/* implements OnLifecycleEvent*/ {
 	// Standard Debugging variables
 	private static final String TAG = "HTML5AndroidVideo";
 	
@@ -49,7 +49,7 @@ public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
 			}
 			
 			html5webview = new HTML5WebView(proxy.getActivity());
-			html5webview.loadUrl(url /*"http://www.google.nl"*/);
+			html5webview.loadUrl(url);
 			setNativeView(html5webview.getLayout());
 		}
 
@@ -93,7 +93,7 @@ public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
 	}
 	
 
-	public void onPause(Activity activity) {
+	/*public void onPause(Activity activity) {
 	}
 
 	public void onResume(Activity activity) {
@@ -116,6 +116,6 @@ public class WebVideoProxy extends TiViewProxy implements OnLifecycleEvent {
 
 	public void onDestroy(Activity arg0) {
 
-	}
+	}*/
 	
 }
