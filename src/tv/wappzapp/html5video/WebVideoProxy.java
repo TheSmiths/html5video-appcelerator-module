@@ -19,38 +19,62 @@ import org.appcelerator.titanium.proxy.TiViewProxy;
 import org.appcelerator.titanium.view.TiCompositeLayout;
 import org.appcelerator.titanium.view.TiCompositeLayout.LayoutArrangement;
 import org.appcelerator.titanium.view.TiUIView;
-import org.itri.html5webview.*;
+import html5video.wappzapp.*;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.FrameLayout;
 
 import android.app.Activity;
 
-// This proxy can be created by calling Html5video.createExample({message: "hello world"})
 @Kroll.proxy(creatableInModule=Html5videoModule.class)
-public class WebVideoProxy extends TiViewProxy/* implements OnLifecycleEvent*/ {
+public class WebVideoProxy extends TiViewProxy {
 	// Standard Debugging variables
 	private static final String TAG = "HTML5AndroidVideo";
 	
-	HTML5WebView html5webview;
-	String url;
-	TiUIView view;
+    //private VideoEnabledWebView webView;
+    private VideoEnabledWebChromeClient webChromeClient;
+	private String url;
+	private TiUIView view;
 	
 	private class WebVideoView extends TiUIView
 	{
 		public WebVideoView(TiViewProxy proxy) {
 			super(proxy);
-			LayoutArrangement arrangement = LayoutArrangement.DEFAULT;
 
-			if (proxy.hasProperty(TiC.PROPERTY_LAYOUT)) {
-				String layoutProperty = TiConvert.toString(proxy.getProperty(TiC.PROPERTY_LAYOUT));
-				if (layoutProperty.equals(TiC.LAYOUT_HORIZONTAL)) {
-					arrangement = LayoutArrangement.HORIZONTAL;
-				} else if (layoutProperty.equals(TiC.LAYOUT_VERTICAL)) {
-					arrangement = LayoutArrangement.VERTICAL;
-				}
-			}
-			
-			html5webview = new HTML5WebView(proxy.getActivity());
-			html5webview.loadUrl(url);
-			setNativeView(html5webview.getLayout());
+	        Html5videoModule.webView = new VideoEnabledWebView(proxy.getActivity());
+
+	        webChromeClient = new VideoEnabledWebChromeClient(Html5videoModule.webView) // See all available constructors...
+
+	        {
+	            // Subscribe to standard events, such as onProgressChanged()...
+	            /*@Override
+	            public void onProgressChanged(WebView view, int progress)
+	            {
+	                // Your code...
+	            }*/
+	        };
+	        webChromeClient.setOnToggledFullscreen(new VideoEnabledWebChromeClient.ToggledFullscreenCallback()
+	        {
+	            @Override
+	            public void toggledFullscreen(boolean fullscreen)
+	            {
+	                // Your code to handle the full-screen change, for example showing and hiding the title bar. Example:
+	                if (fullscreen)
+	                {
+	                	// sent fullscreen event
+	                }
+	                else
+	                {
+	                	// sent not full screen event
+	                }
+
+	            }
+	        });
+	        Html5videoModule.webView.setWebChromeClient(webChromeClient);
+
+        	// Navigate everywhere you want, this classes have only been tested on YouTube's mobile site
+			setNativeView(Html5videoModule.webView);
 		}
 
 		@Override
@@ -65,6 +89,13 @@ public class WebVideoProxy extends TiViewProxy/* implements OnLifecycleEvent*/ {
 	{
 		super();
 	}
+
+	@Kroll.method
+    public void clearWebView()
+    {
+    	Html5videoModule.webView.onPause();
+		Log.d(TAG, "[PROXY LIFECYCLE EVENT] clearWebView called");
+    }
 
 	@Override
 	public TiUIView createView(Activity activity)
@@ -82,40 +113,13 @@ public class WebVideoProxy extends TiViewProxy/* implements OnLifecycleEvent*/ {
 		super.handleCreationDict(options);
 		if (options.containsKey("url")) {
 			url = (String) options.get("url");
-			//html5webview.loadUrl(url);
+			Html5videoModule.webView.loadUrl(url);
 		}
 	}
 	
 	@Kroll.setProperty @Kroll.method
 	public void setUrl(String _url) {
 		url = _url;
-		html5webview.loadUrl(url);
+		Html5videoModule.webView.loadUrl(url);
 	}
-	
-
-	/*public void onPause(Activity activity) {
-	}
-
-	public void onResume(Activity activity) {
-	}
-
-	public void onStart(Activity activity) {
-		//super.onStart(activity);
-	}
-
-	public void onStop(Activity activity) {
-		//super.onStop(activity);
-
-		html5webview.destroy();
-		//html5webview.destroyDrawingCache();
-		html5webview = null;
-		
-		//view.destroyDrawingCache();
-		//view = null;
-	}
-
-	public void onDestroy(Activity arg0) {
-
-	}*/
-	
 }

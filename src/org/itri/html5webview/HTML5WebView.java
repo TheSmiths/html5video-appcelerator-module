@@ -76,7 +76,7 @@ public class HTML5WebView extends WebView {
 	    
 	    // enable navigator.geolocation 
 	    s.setGeolocationEnabled(true);
-	    s.setGeolocationDatabasePath("/data/data/org.itri.html5webview/databases/");
+	    //s.setGeolocationDatabasePath("/data/data/org.itri.html5webview/databases/");
 	    
 	    // enable Web Storage: localStorage, sessionStorage
 	    s.setDomStorageEnabled(true);

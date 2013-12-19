@@ -13,13 +13,20 @@ import org.appcelerator.kroll.annotations.Kroll;
 
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
+import android.app.Activity;
+
+import html5video.wappzapp.*;
+
 
 @Kroll.module(name="Html5video", id="tv.wappzapp.html5video")
 public class Html5videoModule extends KrollModule
 {
 
+	// *
+	public static VideoEnabledWebView webView;
+
 	// Standard Debugging variables
-	private static final String TAG = "Html5videoModule";
+	private static final String LCAT = "Html5videoModule";
 	// You can define constants with @Kroll.constant, for example:
 	// @Kroll.constant public static final String EXTERNAL_NAME = value;
 	
@@ -28,12 +35,65 @@ public class Html5videoModule extends KrollModule
 		super();
 	}
 
-	@Kroll.onAppCreate
-	public static void onAppCreate(TiApplication app)
+    @Kroll.onAppCreate
+    public static void onAppCreate(TiApplication app) 
+    {
+            // This method is called during application startup. It is only called once and
+            // is called before your module is actually loaded. Use this method to perform
+            // process specific initialization -- for example, starting a service that is 
+            // required by the module.
+            
+            Log.d(LCAT, "[MODULE LIFECYCLE EVENT] onAppCreate notification");
+    }
+
+	@Override
+	public void onStart(Activity activity) 
 	{
-		Log.d(TAG, "inside onAppCreate");
-		// put module init code that needs to run when the application is created
+	        // This method is called when the module is loaded and the root context is started
+	        
+	        Log.d(LCAT, "[MODULE LIFECYCLE EVENT] start");
+	        
+	        super.onStart(activity);
 	}
 
+	@Override
+	public void onStop(Activity activity) 
+	{
+	        // This method is called when the root context is stopped 
+	        
+	        Log.d(LCAT, "[MODULE LIFECYCLE EVENT] stop");
+	        
+	        super.onStop(activity);
+	}
+
+	@Override
+	public void onPause(Activity activity) 
+	{
+	        // This method is called when the root context is being suspended
+	        
+	        Log.d(LCAT, "[MODULE LIFECYCLE EVENT] pause");
+	        
+	        super.onPause(activity);
+	}
+
+	@Override
+	public void onResume(Activity activity) 
+	{                
+	        // This method is called when the root context is being resumed
+	     	
+	        Log.d(LCAT, "[MODULE LIFECYCLE EVENT] resume");        
+	        
+	        super.onResume(activity);
+	}
+
+	@Override
+	public void onDestroy(Activity activity) 
+	{
+	        // This method is called when the root context is being destroyed
+	        
+	        Log.d(LCAT, "[MODULE LIFECYCLE EVENT] destroy");
+	        //webView.onPause();
+	        super.onDestroy(activity);
+	}
 }
 

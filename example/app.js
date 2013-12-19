@@ -27,9 +27,9 @@ button.addEventListener('click', function() {
 
 	var HTML5Video = require('tv.wappzapp.html5video');
 	var proxy = HTML5Video.createWebVideo({
-		width : 600,
-		height : 600,
-		url : 'http://www.youtube.com/embed/zDl31YBlbE8'
+		//width : ,
+		//height : 600,
+		url : 'http://www.youtube.com/embed/sPwNxum2xbk'
 	});
 
 	win.add(proxy);
